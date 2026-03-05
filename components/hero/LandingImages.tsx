@@ -32,7 +32,7 @@ export default function LandingImages() {
   const borderStyle = "border-[2px] border-slate-400/30 shadow-2xl rounded-3xl overflow-hidden";
 
   return (
-    <div className="relative w-full h-[520px] md:h-[680px] lg:h-[750px] flex items-center justify-center overflow-hidden bg-transparent px-4">
+    <div className="relative w-full h-[750px] flex items-center justify-center overflow-hidden bg-transparent">
       {/* Diagonal Ray Beam from nav bottom-left, striking across top-left of images */}
       {/* <div
         className="absolute -top-20 -left-64 w-[1000px] h-[250px] origin-top-left -rotate-[28deg] pointer-events-none z-30"
@@ -43,7 +43,7 @@ export default function LandingImages() {
         <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] w-[120%] bg-white/80 opacity-60 blur-[1px] dark:bg-cyan-100/80" />
       </div> */}
       {/* Container moved up slightly */}
-      <div style={commonPerspectiveStyle} className="relative -mt-16 md:-mt-24 lg:-mt-32 scale-95 md:scale-100">
+      <div style={commonPerspectiveStyle} className="relative -mt-32">
         
         {/* FRONT IMAGE - Top Layer */}
         <div
@@ -51,7 +51,7 @@ export default function LandingImages() {
             ...commonImageStyle,
             ...frontImageMask,
           }}
-          className="relative z-20 left-4 md:left-10 lg:left-16" 
+          className="relative z-20 left-16" 
         >
           <div className={borderStyle}>
             <Image
@@ -59,9 +59,8 @@ export default function LandingImages() {
               alt="Main Dashboard Mockup"
               width={1100}
               height={720}
-              sizes="(max-width: 640px) 95vw, (max-width: 1024px) 75vw, 1100px"
               priority
-              className="bg-white w-full h-auto"
+              className="bg-white"
             />
           </div>
         </div>
@@ -72,7 +71,7 @@ export default function LandingImages() {
             ...commonImageStyle,
             ...backImageMask,
           }}
-          className="absolute top-10 md:top-16 -left-6 md:-left-12 z-0" 
+          className="absolute top-20 -left-12 z-0" 
         >
           <div className={borderStyle}>
             <Image
@@ -80,7 +79,6 @@ export default function LandingImages() {
               alt="Background Layer Mockup"
               width={1100}
               height={720}
-              sizes="(max-width: 640px) 95vw, (max-width: 1024px) 75vw, 1100px"
               className="opacity-60 grayscale-[20%]" 
             />
           </div>
