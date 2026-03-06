@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Star, MessageCircle, Quote, Bot, User, Sparkles, Zap } from "lucide-react";
+import { Send, Star, Sparkles, Zap } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 const DottedTexture = ({ color = "#000", opacity = "0.2" }) => (
