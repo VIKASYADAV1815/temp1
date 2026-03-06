@@ -3,6 +3,7 @@
 import LandingImages from "./LandingImages";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import SunrayBeam from "./SunrayBeam";
 
 const DottedTexture = ({ color = "#000", opacity = "0.2" }) => (
   <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -39,32 +40,8 @@ export default function HeroSection() {
         <DottedTexture color="#6366f1" opacity="0.25" />
       </motion.div>
 
-      {/* STATIC SUNRAY BEAM */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* The Ray - Conical Gradient for "Thin Start, Thick End" */}
-        <div 
-          className="absolute -top-[10%] -left-[10%] w-[150%] h-[150%] z-0 opacity-40 dark:opacity-20 blur-[60px]"
-          style={{
-            background: "conic-gradient(from 125deg at 5% 5%, transparent 0deg, currentColor 15deg, transparent 35deg)",
-            color: "var(--beam-color, #a1a1aa)" // Default Zinc-400 equivalent
-          }}
-        >
-          {/* Dynamic Color Injection via CSS Variable or Classes */}
-          <div className="hidden dark:block" style={{ color: "white" }} />
-          <div className="block dark:hidden" style={{ color: "#71717a" }} /> {/* Zinc-500 */}
-        </div>
-        
-        {/* Fallback for better color control using classes directly on a child if needed, 
-            but the style above uses currentColor. Let's force the color via class on the parent div.
-        */}
-        <div 
-          className="absolute -top-[5%] -left-[5%] w-[140%] h-[140%] z-0 blur-[50px]
-            text-zinc-500/40 dark:text-white/15"
-          style={{
-            background: "conic-gradient(from 120deg at 0 0, transparent 0deg, currentColor 15deg, transparent 40deg)"
-          }}
-        />
-      </div>
+      {/* DYNAMIC SUNRAY BEAM COMPONENT */}
+      <SunrayBeam />
 
       {/* Content Container */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 flex flex-col items-end text-right">

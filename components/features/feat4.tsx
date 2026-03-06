@@ -17,7 +17,7 @@ export default function NeuralRaybeam() {
 }
 
 // Styled Premium Button
-const PremiumButton = ({ children, icon: Icon }: { children: React.ReactNode, icon?: any }) => (
+const PremiumButton = ({ children, icon: Icon }: { children: React.ReactNode, icon?: React.ElementType }) => (
   <motion.button
     whileHover={{ scale: 1.02, translateY: -1 }}
     whileTap={{ scale: 0.98 }}
@@ -143,7 +143,17 @@ function VariableModelCard() {
   );
 }
 
-function DataRow({ label, plan, actual, variance, trend, isTotal, index }: any) {
+interface DataRowProps {
+  label: string;
+  plan: string;
+  actual: string;
+  variance: string;
+  trend: "up" | "down" | "neutral";
+  isTotal?: boolean;
+  index: number;
+}
+
+function DataRow({ label, plan, actual, variance, trend, isTotal, index }: DataRowProps) {
   const isUp = trend === "up";
   return (
     <motion.tr 
@@ -167,7 +177,15 @@ function DataRow({ label, plan, actual, variance, trend, isTotal, index }: any) 
   );
 }
 
-function VariableRow({ icon, label, value, hasChart, isBold }: any) {
+interface VariableRowProps {
+  icon: React.ReactNode | string;
+  label: string;
+  value?: string;
+  hasChart?: boolean;
+  isBold?: boolean;
+}
+
+function VariableRow({ icon, label, value, hasChart, isBold }: VariableRowProps) {
   return (
     <motion.div 
       whileHover={{ x: 2 }}
