@@ -1,164 +1,198 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
+import { ChevronRight, Calculator, ArrowUpRight, Sparkles } from "lucide-react";
 
 export default function NeuralRaybeam() {
   return (
-    <div className="relative w-full h-full p-10 flex flex-col group overflow-hidden bg-background">
-      
-      {/* 1. SUBTLE BACKGROUND (removed dots for cleaner surface) */}
-      <motion.div 
-        aria-hidden 
-        className="absolute inset-0 pointer-events-none"
-        animate={{ opacity: [0.2, 0.35, 0.2] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        style={{ background: "radial-gradient(600px circle at 40% 35%, rgba(99,102,241,0.10), transparent 60%)" }}
-      />
-
-      {/* 2. HEADER */}
-      <div className="relative z-10 flex flex-col">
-        <motion.div 
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-2 mb-1"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.8)]" />
-          <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.3em]">Neural Mesh v4</span>
-        </motion.div>
-        
-        <h3 className="text-4xl font-bold tracking-tighter leading-[0.85]">
-          Autonomous <br />
-          <span className="text-zinc-300 dark:text-zinc-400 group-hover:text-indigo-500/50 transition-colors duration-1000">Inference.</span>
-        </h3>
-        <p className="mt-2 text-[13px] max-w-[280px] font-medium text-zinc-600 dark:text-zinc-300">
-          Neural mesh orchestrates signals and converges actions with auditability.
-        </p>
+    <div className="w-full py-8 px-4 flex flex-col items-center justify-center bg-transparent">
+      {/* Tightened Container */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-5xl">
+        <BudgetPlanCard />
+        <VariableModelCard />
       </div>
-
-      {/* 3. CENTER PIECE: THE RAYBEAM SYSTEM */}
-      <div className="relative flex-1 flex items-center justify-center -mt-4">
-        
-        {/* Central Ambient Glow */}
-        <div className="absolute w-80 h-80 bg-indigo-50/40 rounded-full blur-[100px] -z-10" />
-
-        <div className="relative flex items-center justify-between w-full max-w-2xl px-2">
-          
-          {/* USER NODE */}
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="relative z-20 p-1 bg-white/90 backdrop-blur-sm border border-zinc-100 rounded-xl shadow-[0_24px_60px_-20px_rgba(0,0,0,0.25)]"
-          >
-            <div className="w-12 h-12 rounded-[10px] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-              <img 
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </motion.div>
-
-          {/* THE RAYBEAM SVG */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-12">
-            <svg width="100%" height="100%" viewBox="0 0 500 100" preserveAspectRatio="none" className="overflow-visible">
-              <path d="M 0 50 L 500 50" stroke="#f1f5f9" strokeWidth="1" />
-              <motion.path
-                d="M 0 50 L 500 50"
-                stroke="url(#raybeamGradient)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-              <defs>
-                <motion.linearGradient 
-                  id="raybeamGradient" 
-                  gradientUnits="userSpaceOnUse"
-                  initial={{ x1: "-20%", x2: "0%" }}
-                  animate={{ x1: ["-20%", "120%"], x2: ["0%", "140%"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <stop offset="0%" stopColor="#6366f1" stopOpacity="0" />
-                  <stop offset="50%" stopColor="#6366f1" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
-                </motion.linearGradient>
-              </defs>
-            </svg>
-          </div>
-
-          {/* BRAIN HUB (The "A" with Effects) */}
-          <div className="relative flex items-center justify-center">
-            {/* Outer Pulsing Aura */}
-            <motion.div 
-              animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.3, 0.1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute w-24 h-24 bg-indigo-500 rounded-full blur-xl"
-            />
-            
-            {/* Rotating Dashed Ring */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute w-24 h-24 border border-zinc-200 border-dashed rounded-full"
-            />
-            
-            {/* The Core Container */}
-            <div className="w-16 h-16 bg-zinc-950 rounded-2xl flex items-center justify-center shadow-[0_30px_80px_-20px_rgba(0,0,0,0.5)] relative z-10 overflow-hidden ring-1 ring-white/10">
-              {/* Shimmering "A" */}
-              <motion.span 
-                animate={{ opacity: [0.7, 1, 0.7], scale: [0.98, 1, 0.98] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="text-white font-bold text-2xl tracking-tighter drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
-              >
-                A
-              </motion.span>
-
-              {/* Vertical Scan Effect */}
-              <motion.div 
-                animate={{ top: ["-100%", "100%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute left-0 right-0 h-1/2 bg-gradient-to-b from-transparent via-indigo-400/20 to-transparent pointer-events-none"
-              />
-
-              {/* Energy Flash on Ray Entry */}
-              <motion.div 
-                animate={{ opacity: [0, 0.4, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, delay: 1.25 }}
-                className="absolute inset-0 bg-indigo-500" 
-              />
-            </div>
-          </div>
-
-          {/* RESPONSE NODE */}
-          <motion.div 
-            whileHover={{ y: -2 }}
-            className="relative z-20 p-3 bg-white/90 backdrop-blur-sm border border-zinc-100 rounded-xl shadow-[0_24px_60px_-20px_rgba(0,0,0,0.25)] min-w-[130px]"
-          >
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <div className="h-1 w-6 bg-zinc-900 rounded-full" />
-                <div className="flex gap-0.5">
-                    {[1,2,3].map(i => <div key={i} className="w-1 h-1 bg-zinc-100 rounded-full" />)}
-                </div>
-              </div>
-              <div className="h-[1px] w-full bg-zinc-50" />
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_#10b981]" />
-                <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-tight">Process_Done</span>
-              </div>
-            </div>
-          </motion.div>
-
-        </div>
-      </div>
-
-      {/* 4. FOOTER */}
-      <div className="relative z-10 mt-auto flex items-center justify-between border-t border-zinc-50 pt-6 opacity-60 group-hover:opacity-100 transition-opacity">
-        <div className="flex items-center gap-4 text-[10px] font-bold text-zinc-500 tracking-widest uppercase">
-          <span className="flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-emerald-500" />
-            Reliability 99.9%
-          </span>
-        </div>
-        <span className="text-[10px] font-black text-zinc-900 tracking-tighter uppercase">Cluster_v4.2</span>
-      </div>
-
     </div>
+  );
+}
+
+// Styled Premium Button
+const PremiumButton = ({ children, icon: Icon }: { children: React.ReactNode, icon?: any }) => (
+  <motion.button
+    whileHover={{ scale: 1.02, translateY: -1 }}
+    whileTap={{ scale: 0.98 }}
+    className="relative group overflow-hidden px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[12px] font-bold rounded-lg shadow-sm transition-all"
+  >
+    {/* Internal Texture */}
+    <div className="absolute inset-0 pointer-events-none opacity-[0.1] scale-[0.4] z-10">
+      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="dense-dots-btn" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="0.8" fill="currentColor" fillOpacity="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dense-dots-btn)" />
+      </svg>
+    </div>
+
+    {/* The Beam */}
+    <div className="absolute bottom-0 left-0 right-0 h-[1.5px] w-full flex justify-center z-30">
+      <div className="w-[85%] h-full bg-gradient-to-r from-transparent via-cyan-400 dark:via-indigo-500 to-transparent opacity-90" />
+    </div>
+
+    {/* Top Bevel */}
+    <div className="absolute inset-x-0 top-0 h-[1px] bg-white/20 z-20" />
+
+    {/* Hover Sweep */}
+    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/10 to-transparent z-20" />
+
+    <span className="relative z-30 flex items-center gap-2">
+      {children}
+      {Icon && <Icon className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
+    </span>
+  </motion.button>
+);
+
+function BudgetPlanCard() {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col space-y-4"
+    >
+      <div className="space-y-3">
+        <p className="text-zinc-500 text-[12px] leading-relaxed max-w-[320px]">
+          Compare models side-by-side with automated variance tracking and audit logs.
+        </p>
+        <PremiumButton icon={ArrowUpRight}>Start Budget Template</PremiumButton>
+      </div>
+
+      <div className="border border-zinc-200/60 dark:border-zinc-800 rounded-xl bg-white/50 dark:bg-zinc-950/50 backdrop-blur-sm p-1 shadow-sm overflow-hidden">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-zinc-100 dark:border-zinc-800">
+              <th className="p-3 text-[10px] font-black text-zinc-400 uppercase tracking-widest">Q1 2023</th>
+              <th className="p-3 text-[10px] font-black text-zinc-400 uppercase tracking-widest text-right">Plan</th>
+              <th className="p-3 text-[10px] font-black text-zinc-400 uppercase tracking-widest text-right">Actuals</th>
+              <th className="p-3 text-[10px] font-black text-zinc-400 uppercase tracking-widest text-right">Var</th>
+            </tr>
+          </thead>
+          <tbody className="text-[12px]">
+            <DataRow label="Advertising" plan="120k" actual="105k" variance="-12%" trend="down" index={1} />
+            <DataRow label="Software" plan="12k" actual="14k" variance="+16%" trend="up" index={2} />
+            <DataRow label="Payroll" plan="248k" actual="250k" variance="+1%" trend="neutral" index={3} />
+            <DataRow label="Total" plan="394k" actual="383k" variance="-3%" trend="down" isTotal index={4} />
+          </tbody>
+        </table>
+      </div>
+    </motion.div>
+  );
+}
+
+function VariableModelCard() {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 }}
+      className="flex flex-col space-y-4"
+    >
+      <div className="space-y-3">
+        <p className="text-zinc-500 text-[12px] leading-relaxed max-w-[320px]">
+          Build credible bottom-up plans with our predictive SaaS modeling engine.
+        </p>
+        <PremiumButton icon={Sparkles}>View SaaS Revenue</PremiumButton>
+      </div>
+
+      <div className="border border-zinc-200/60 dark:border-zinc-800 rounded-xl bg-white/50 dark:bg-zinc-950/50 backdrop-blur-sm p-1 shadow-sm">
+        <div className="p-3 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center">
+          <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Logic Variables</span>
+          <div className="flex gap-4">
+             <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Feb</span>
+             <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Mar</span>
+          </div>
+        </div>
+        
+        <div className="p-1.5 space-y-0.5">
+          <VariableRow icon="#" label="Churn Rate" value="6%" />
+          <VariableRow icon="#" label="Conv %" hasChart />
+          
+          <motion.div 
+            whileHover={{ scale: 1.005, backgroundColor: "rgba(99, 102, 241, 0.04)" }}
+            className="group relative bg-indigo-50/30 dark:bg-indigo-500/5 border border-indigo-100/50 dark:border-indigo-500/10 rounded-lg p-2.5 my-1.5 transition-colors"
+          >
+            <div className="flex items-center gap-2 mb-1.5">
+              <Calculator className="w-3 h-3 text-indigo-500" />
+              <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-tighter">Inference Logic</span>
+            </div>
+            <div className="flex flex-wrap gap-1 items-center font-mono text-[10px]">
+              <span className="text-zinc-400">if</span>
+              <span className="text-orange-500">Product</span>
+              <span className="text-zinc-400">==</span>
+              <span className="text-emerald-500">SaaS</span>
+              <ChevronRight className="w-2.5 h-2.5 text-zinc-300" />
+              <span className="text-indigo-500">Apply_Growth</span>
+            </div>
+          </motion.div>
+
+          <VariableRow icon="f" label="Churned MRR" value="$2.4k" hasChart />
+          <VariableRow icon="f" label="Total MRR" value="$1.24M" isBold />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function DataRow({ label, plan, actual, variance, trend, isTotal, index }: any) {
+  const isUp = trend === "up";
+  return (
+    <motion.tr 
+      initial={{ opacity: 0, x: -4 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.05 }}
+      whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+      className={`group border-b border-zinc-50 dark:border-zinc-900/50 last:border-0 ${isTotal ? 'bg-zinc-50/50 dark:bg-zinc-900/20 font-bold' : ''}`}
+    >
+      <td className="p-3 text-zinc-700 dark:text-zinc-300">{label}</td>
+      <td className="p-3 text-right text-zinc-400">$ {plan}</td>
+      <td className="p-3 text-right text-zinc-900 dark:text-zinc-100">{actual}</td>
+      <td className="p-3 text-right">
+        <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+          isUp ? 'text-rose-500 bg-rose-500/10' : trend === "down" ? 'text-emerald-500 bg-emerald-500/10' : 'text-zinc-400 bg-zinc-100'
+        }`}>
+          {variance}
+        </span>
+      </td>
+    </motion.tr>
+  );
+}
+
+function VariableRow({ icon, label, value, hasChart, isBold }: any) {
+  return (
+    <motion.div 
+      whileHover={{ x: 2 }}
+      className="flex items-center justify-between p-2 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-all group cursor-default"
+    >
+      <div className="flex items-center gap-2.5">
+        <span className="w-4 h-4 flex items-center justify-center rounded bg-zinc-100 dark:bg-zinc-800 text-[9px] font-mono font-black text-zinc-400 group-hover:text-indigo-500 transition-colors">
+          {icon}
+        </span>
+        <span className={`text-[12px] ${isBold ? 'font-bold text-zinc-900 dark:text-white' : 'text-zinc-500'}`}>
+          {label}
+        </span>
+      </div>
+      <div className="flex items-center gap-4">
+        {hasChart && (
+          <div className="flex items-end gap-0.5 h-3 w-10">
+            {[40, 70, 45, 90, 65].map((h, i) => (
+              <motion.div key={i} initial={{ height: 0 }} animate={{ height: `${h}%` }} className="w-1 bg-indigo-500/20 rounded-t-[1px]" />
+            ))}
+          </div>
+        )}
+        <span className="text-[12px] font-mono font-bold text-zinc-800 dark:text-zinc-200 min-w-[50px] text-right">
+          {value || "—"}
+        </span>
+      </div>
+    </motion.div>
   );
 }

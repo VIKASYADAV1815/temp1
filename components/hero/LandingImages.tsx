@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function LandingImages() {
   const rotateX = 25;
@@ -39,8 +40,15 @@ export default function LandingImages() {
           2. scale-[0.75]: Slightly smaller for mobile to prevent left-side clipping.
           3. items-center: Ensures the 3D origin is centered.
       */}
-      <div 
+      <motion.div 
         style={commonPerspectiveStyle} 
+        initial={{ x: 50, y: -30, opacity: 0 }}
+        animate={{ x: 0, y: 0, opacity: 1 }}
+        transition={{ 
+          duration: 0.8, 
+          ease: "easeOut",
+          delay: 0.1
+        }}
         className="relative flex items-center justify-center -mt-48 md:-mt-32 scale-[0.75] sm:scale-[0.85] md:scale-100 transition-all duration-500"
       >
         
@@ -86,7 +94,7 @@ export default function LandingImages() {
           </div>
         </div>
 
-      </div>
+      </motion.div>
     </div>
   );
 }
