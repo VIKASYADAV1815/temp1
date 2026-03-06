@@ -36,9 +36,9 @@ export default function LandingImages() {
     /* Adjusted height for mobile to keep the layout tight */
     <div className="relative w-full h-[400px] sm:h-[500px] md:h-[750px] flex items-center justify-center overflow-hidden bg-transparent">
       
-      {/* 1. -mt-48: Pulls images up to reduce the top gap.
-          2. scale-[0.75]: Slightly smaller for mobile to prevent left-side clipping.
-          3. items-center: Ensures the 3D origin is centered.
+      {/* 
+          -mt-12 sm:-mt-24 md:-mt-32: Reduced negative margin on mobile to prevent cutting.
+          scale-[0.6]: Smaller scale on mobile to fit width.
       */}
       <motion.div 
         style={commonPerspectiveStyle} 
@@ -49,7 +49,7 @@ export default function LandingImages() {
           ease: "easeOut",
           delay: 0.1
         }}
-        className="relative flex items-center justify-center -mt-48 md:-mt-32 scale-[0.75] sm:scale-[0.85] md:scale-100 transition-all duration-500"
+        className="relative flex items-center justify-center -mt-12 sm:-mt-24 md:-mt-32 scale-[0.6] sm:scale-[0.75] md:scale-100 transition-all duration-500"
       >
         
         {/* FRONT IMAGE */}
@@ -62,14 +62,23 @@ export default function LandingImages() {
           className="relative z-20 md:left-16" 
         >
           <div className={borderStyle}>
+            {/* Light Mode */}
             <Image
               src="https://assets.aceternity.com/agenforce-demo-1.jpg"
               alt="Main Dashboard Mockup"
               width={1100}
               height={720}
               priority
-              /* Reduced from 130vw to 115vw for better mobile fit */
-              className="bg-white w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none"
+              className="bg-white w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none block dark:hidden"
+            />
+            {/* Dark Mode */}
+            <Image
+              src="/images/dash-dark.webp"
+              alt="Main Dashboard Mockup Dark"
+              width={1100}
+              height={720}
+              priority
+              className="bg-zinc-900 w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none hidden dark:block"
             />
           </div>
         </div>
@@ -84,12 +93,21 @@ export default function LandingImages() {
           className="absolute top-8 md:top-20 -left-6 md:-left-12 z-0" 
         >
           <div className={borderStyle}>
+            {/* Light Mode */}
             <Image
               src="https://assets.aceternity.com/agenforce-demo-1.jpg"
               alt="Background Layer Mockup"
               width={1100}
               height={720}
-              className="opacity-60 grayscale-[20%] w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none" 
+              className="opacity-60 grayscale-[20%] w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none block dark:hidden" 
+            />
+            {/* Dark Mode */}
+            <Image
+              src="/images/dash-dark.webp"
+              alt="Background Layer Mockup Dark"
+              width={1100}
+              height={720}
+              className="opacity-60 grayscale-[20%] w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none hidden dark:block" 
             />
           </div>
         </div>

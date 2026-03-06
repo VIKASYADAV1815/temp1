@@ -13,15 +13,11 @@ export default function SunrayBeam() {
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
          style={{
-           // Global vertical mask to strictly prevent bottom leakage - Cut off earlier
-           maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%)",
-           WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%)"
+           maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 80%)",
+           WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 80%)"
          }}
     >
-      {/* 
-        THE RAY - Conical Gradient 
-        - Constrained to top-left
-        - Animated entry: Revolving/Revealing from top-left
+      {/* THE RAY - Perspective Locked 
       */}
       <motion.div 
         initial={{ opacity: 0, rotate: -20, scale: 0.5, filter: "blur(20px)" }}
@@ -39,66 +35,64 @@ export default function SunrayBeam() {
         className="absolute -top-[20%] -left-[10%] w-[150%] h-[150%] z-0 blur-[50px]"
         style={{
           background: "conic-gradient(from 135deg at 5% 5%, transparent 0deg, currentColor 10deg, transparent 35deg)",
-          color: "var(--beam-color, #a1a1aa)", 
-          // Strong radial mask to keep it contained to the top-left quadrant
+          color: "var(--beam-color, #71717a)", // Darker base color for light mode
           maskImage: "radial-gradient(circle at 5% 5%, black 0%, transparent 60%)",
           WebkitMaskImage: "radial-gradient(circle at 5% 5%, black 0%, transparent 60%)"
         }}
       >
         <div className="hidden dark:block" style={{ color: "rgba(255,255,255,0.15)" }} />
-        <div className="block dark:hidden" style={{ color: "rgba(82, 82, 91, 0.4)" }} />
+        <div className="block dark:hidden" style={{ color: "rgba(82, 82, 91, 0.6)" }} /> {/* Darker ray in light mode */}
       </motion.div>
 
-      {/* 
-        SPARKLING PARTICLES
-        - Constrained within the beam area (top-left)
-        - Fall from top-left towards bottom-right
-        - Visible in Light & Dark modes
+      {/* DUST PARTICLES - Reduced Quantity & Diagonal Movement 
       */}
-      <div 
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          // Mask particles to match the beam's general area
-          maskImage: "radial-gradient(circle at 10% 10%, black 0%, transparent 55%)",
-          WebkitMaskImage: "radial-gradient(circle at 10% 10%, black 0%, transparent 55%)"
-        }}
-      >
-         {mounted && [...Array(35)].map((_, i) => {
-           // Randomly assign cyan or standard color
-           const isCyan = Math.random() > 0.6; // 40% chance of cyan
-           const randomDelay = Math.random() * 2;
-           // Slower animation: 5s to 10s duration
-           const randomDuration = 5 + Math.random() * 5;
+      <div className="absolute inset-0 z-10 pointer-events-none">
+         {mounted && [...Array(60)].map((_, i) => {
+           const randomDelay = Math.random() * 12;
+           // Very slow: 15 to 25 seconds for that "floating" feel
+           const randomDuration = 15 + Math.random() * 10; 
+           const size = Math.random() * 1.5 + 0.5; // Sharper and smaller
+           
+           // Diagonal Trajectory Logic
+           // Increased distance to reach the landing image area
+           const driftDist = 350 + Math.random() * 250;
            
            return (
              <motion.div
                key={i}
-               initial={{ 
-                 opacity: 0, 
-                 x: -10,
-                 y: -10 
-               }}
+               initial={{ opacity: 0, x: 0, y: 0 }}
                animate={{ 
-                 opacity: [0, 1, 1, 0], 
-                 x: [0, Math.random() * 100 + 30],   // Drift right
-                 y: [0, Math.random() * 350 + 150],  // Fall down
-                 scale: [0, Math.random() * 1.5 + 0.5, 0]
+                 opacity: [0, 0.8, 0.8, 0],
+                 // Diagonal travel: x moves proportionally to y
+                 x: [0, driftDist * 0.4], 
+                 y: [
+                   0, 
+                   driftDist, 
+                   driftDist - 40 // Stronger bounce back up
+                 ],
+                 scale: [0, 1.2, 1.2, 0]
                }}
                transition={{ 
                  duration: randomDuration,
                  repeat: Infinity, 
                  delay: randomDelay,
-                 ease: "linear"
+                 ease: "linear",
+                 times: [0, 0.1, 0.85, 1] 
                }}
                style={{
-                 left: `${Math.random() * 35}%`, // Start in top-left area
-                 top: `${Math.random() * 35}%`,  // Start in top-left area
+                 // Clustered near the beam source
+                 left: `${Math.random() * 20}%`, 
+                 top: `${Math.random() * 15}%`,
+                 width: `${size}px`,
+                 height: `${size}px`,
                }}
-               className={`absolute rounded-full blur-[0.5px]
-                 ${isCyan 
-                   ? 'w-1.5 h-1.5 bg-cyan-400 dark:bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.8)]' 
-                   : 'w-1 h-1 bg-zinc-500 dark:bg-white/80'
-                 }`}
+               className={`absolute rounded-full
+                 /* Light Mode: Much darker/visible dust */
+                 bg-zinc-600/80 shadow-[0_0_2px_rgba(0,0,0,0.2)]
+                 /* Dark Mode: Crisp White/Cyan Mix */
+                 dark:bg-white dark:shadow-[0_0_3px_rgba(255,255,255,0.2)]
+                 ${i % 2 === 0 ? 'dark:bg-cyan-200/80' : ''}
+               `}
              />
            );
          })}

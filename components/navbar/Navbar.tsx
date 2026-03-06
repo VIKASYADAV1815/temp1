@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const DottedTexture = ({ color = "#000", opacity = "0.2" }) => (
   <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -18,6 +19,7 @@ const DottedTexture = ({ color = "#000", opacity = "0.2" }) => (
 
 export default function Navbar() {
   const [hoveredPath, setHoveredPath] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
     { name: "Features", href: "#features" },
@@ -73,8 +75,8 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Right Side */}
-            <div className="flex items-center space-x-2 md:space-x-5">
+            {/* Right Side (Desktop) */}
+            <div className="hidden md:flex items-center space-x-2 md:space-x-5">
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="relative group overflow-hidden px-4 py-2 rounded-xl">
                 <Link
                   href="#login"
@@ -136,8 +138,61 @@ export default function Navbar() {
               </div>
             </div>
 
+            {/* Mobile Toggle */}
+            <div className="flex md:hidden items-center gap-3">
+              <ThemeToggle />
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300"
+              >
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
+
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden overflow-hidden border-t border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-xl"
+            >
+              <div className="p-4 flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="px-4 py-3 rounded-xl text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <div className="h-[1px] bg-zinc-200/50 dark:bg-zinc-800/50 my-2" />
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href="#login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full text-center py-3 text-sm font-bold text-zinc-600 dark:text-zinc-400"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="#signup"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full py-3 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-xl text-center text-sm font-bold shadow-lg"
+                  >
+                    Signup
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </div>
   );
