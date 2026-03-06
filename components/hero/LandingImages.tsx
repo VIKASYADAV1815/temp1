@@ -29,29 +29,29 @@ export default function LandingImages() {
     maskComposite: "intersect",
   };
 
-  const borderStyle = "border-[2px] border-slate-400/30 shadow-2xl rounded-3xl overflow-hidden";
+  const borderStyle = "border-[1px] md:border-[2px] border-slate-400/30 shadow-2xl rounded-2xl md:rounded-3xl overflow-hidden";
 
   return (
-    <div className="relative w-full h-[750px] flex items-center justify-center overflow-hidden bg-transparent">
-      {/* Diagonal Ray Beam from nav bottom-left, striking across top-left of images */}
-      {/* <div
-        className="absolute -top-20 -left-64 w-[1000px] h-[250px] origin-top-left -rotate-[28deg] pointer-events-none z-30"
-        style={{ maskImage: 'linear-gradient(to right, black 20%, transparent 80%)' }}
+    /* Adjusted height for mobile to keep the layout tight */
+    <div className="relative w-full h-[400px] sm:h-[500px] md:h-[750px] flex items-center justify-center overflow-hidden bg-transparent">
+      
+      {/* 1. -mt-48: Pulls images up to reduce the top gap.
+          2. scale-[0.75]: Slightly smaller for mobile to prevent left-side clipping.
+          3. items-center: Ensures the 3D origin is centered.
+      */}
+      <div 
+        style={commonPerspectiveStyle} 
+        className="relative flex items-center justify-center -mt-48 md:-mt-32 scale-[0.75] sm:scale-[0.85] md:scale-100 transition-all duration-500"
       >
-        <div className="absolute inset-0 rounded-full blur-3xl mix-blend-screen bg-gradient-to-r from-indigo-500/30 via-transparent to-transparent dark:from-cyan-400/20" />
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[6px] w-[120%] bg-gradient-to-r from-indigo-400/80 via-indigo-300/20 to-transparent blur-md dark:from-cyan-300/60 dark:via-cyan-200/10" />
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] w-[120%] bg-white/80 opacity-60 blur-[1px] dark:bg-cyan-100/80" />
-      </div> */}
-      {/* Container moved up slightly */}
-      <div style={commonPerspectiveStyle} className="relative -mt-32">
         
-        {/* FRONT IMAGE - Top Layer */}
+        {/* FRONT IMAGE */}
         <div
           style={{
             ...commonImageStyle,
             ...frontImageMask,
           }}
-          className="relative z-20 left-16" 
+          /* md:left-16 keeps the desktop offset, while mobile stays centered */
+          className="relative z-20 md:left-16" 
         >
           <div className={borderStyle}>
             <Image
@@ -60,18 +60,20 @@ export default function LandingImages() {
               width={1100}
               height={720}
               priority
-              className="bg-white"
+              /* Reduced from 130vw to 115vw for better mobile fit */
+              className="bg-white w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none"
             />
           </div>
         </div>
 
-        {/* BACK IMAGE - Bottom-Left Layer with matched perspective and thicker border */}
+        {/* BACK IMAGE */}
         <div
           style={{
             ...commonImageStyle,
             ...backImageMask,
           }}
-          className="absolute top-20 -left-12 z-0" 
+          /* Positioned relative to the front image without forcing horizontal overflow */
+          className="absolute top-8 md:top-20 -left-6 md:-left-12 z-0" 
         >
           <div className={borderStyle}>
             <Image
@@ -79,7 +81,7 @@ export default function LandingImages() {
               alt="Background Layer Mockup"
               width={1100}
               height={720}
-              className="opacity-60 grayscale-[20%]" 
+              className="opacity-60 grayscale-[20%] w-[115vw] sm:w-[110vw] md:w-[1100px] h-auto max-w-none" 
             />
           </div>
         </div>
